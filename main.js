@@ -8,6 +8,7 @@ $(function(){
   let startTime;
   let timerId;
   let elapsedTime=0;
+  let timeToAdd=0;
   
  function updateTimeText() {
    var h = Math.floor(elapsedTime/3600000);
@@ -25,7 +26,7 @@ $(function(){
  
  function countUp(){
    timerId=setInterval(function(){
-     elapsedTime=Date.now()-startTime;
+     elapsedTime=Date.now()-startTime+timeToAdd;
      updateTimeText();
      
    },10);
@@ -36,12 +37,14 @@ start.addEventListener("click",function(){
 })
 
 stop.addEventListener("click",function(){
- clearInterval(timerId)
+ clearInterval(timerId);
+ timeToAdd+=Date.now()-startTime;
 })
 
 reset.addEventListener("click",function(){
   elapsedTime=0;
   updateTimeText();
+  timeToAdd=0
 })
 $(start).click(function(){
   start.disabled=true;
